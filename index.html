@@ -1,0 +1,1446 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBook Interaktif Soalan Peperiksaan Tahun 6</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                            pink: '#EC4899',
+                            yellow: '#F59E0B',
+                            green: '#10B981',
+                            teal: '#14B8A6',
+                            orange: '#F97316'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F8FAFC;
+        }
+        .font-fredoka {
+            font-family: 'Fredoka', cursive;
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        .btn-bounce:active {
+            transform: scale(0.96);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 9999px;
+        }
+
+        /* Screen Shake Animation for Kebaboom */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-8px, -4px) rotate(-2deg); }
+            20%, 40%, 60%, 80% { transform: translate(8px, 4px) rotate(2deg); }
+        }
+        .animate-shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        /* Explosion scale pulse */
+        @keyframes boomPulse {
+            0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+            70% { transform: scale(0.95) rotate(-2deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .animate-boom {
+            animation: boomPulse 0.45s ease-out forwards;
+        }
+
+        /* Celebration bounce */
+        @keyframes celebBounce {
+            0% { transform: scale(0.2); opacity: 0; }
+            60% { transform: scale(1.15); opacity: 1; }
+            80% { transform: scale(0.95); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-celeb {
+            animation: celebBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 bg-slate-50 flex flex-col justify-between selection:bg-purple-200 selection:text-purple-900">
+
+    <!-- Top Header Navigation -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between py-3">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="app.showDashboard()">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-md transform hover:rotate-6 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+                <div>
+                    <h1 class="font-fredoka text-xl sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-600 tracking-wide">eBook Peperiksaan Tahun 6</h1>
+                    <p class="text-xs text-slate-500 font-medium hidden sm:block">Koleksi Soalan Peperiksaan Interaktif & Latihan Formatif UASA</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats & Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Total Star Score -->
+                <div class="flex items-center bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full text-amber-700 font-bold text-sm shadow-xs">
+                    <svg class="w-4 h-4 mr-1.5 text-amber-500 fill-amber-400" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span id="global-score-badge">0 Bintang</span>
+                </div>
+
+                <!-- Sound Toggle Button -->
+                <button onclick="app.toggleSound()" id="sound-btn" class="p-2.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors focus:outline-none" title="Togel Bunyi">
+                    <svg id="sound-icon-on" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                    <svg id="sound-icon-off" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+                </button>
+
+                <!-- Home Button -->
+                <button onclick="app.showDashboard()" class="px-3.5 py-2 rounded-xl bg-indigo-50 text-indigo-700 font-semibold text-sm hover:bg-indigo-100 transition-colors flex items-center">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Utama
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main id="app-container" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+        <!-- ================= DASHBOARD VIEW ================= -->
+        <section id="view-dashboard" class="space-y-8">
+            
+            <!-- Hero Welcome Card -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white p-6 sm:p-10 shadow-xl">
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <span>✨ Modul Peperiksaan format UASA / KSSR Semakan</span>
+                    </div>
+                    <h2 class="font-fredoka text-3xl sm:text-5xl font-bold leading-tight">Selamat Datang, Bintang Tahun 6! 🚀</h2>
+                    <p class="text-indigo-100 text-base sm:text-lg">
+                        Uji pemahaman anda dengan koleksi 30 soalan interaktif bagi setiap modul. Soalan akan **diacak semula secara automatik** setiap kali anda memulakan ujian baharu!
+                    </p>
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="app.startRandomQuiz()" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0 flex items-center font-fredoka text-lg">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Ujian Campuran Cabaran Pantas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Modules Grid Header -->
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                <div>
+                    <h3 class="font-fredoka text-2xl font-bold text-slate-800">Pilih Modul Mata Pelajaran</h3>
+                    <p class="text-sm text-slate-500">Setiap modul dilengkapi 30 soalan latihan berformat peperiksaan</p>
+                </div>
+                <span class="text-xs font-semibold bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">8 Modul Lengkap</span>
+            </div>
+
+            <!-- Subject Grid Container -->
+            <div id="subject-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Subject cards injected dynamically via JavaScript -->
+            </div>
+        </section>
+
+
+        <!-- ================= QUIZ / ASSESSMENT VIEW ================= -->
+        <section id="view-quiz" class="hidden space-y-6">
+            
+            <!-- Quiz Top Header Bar -->
+            <div class="bg-white rounded-2xl p-4 sm:p-6 card-shadow border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-4 w-full md:w-auto">
+                    <button onclick="app.showDashboard()" class="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors" title="Kembali ke Utama">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </button>
+                    <div>
+                        <span id="quiz-subject-badge" class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-700">Mata Pelajaran</span>
+                        <h2 id="quiz-subject-title" class="font-fredoka text-2xl font-bold text-slate-800">Nama Modul</h2>
+                    </div>
+                </div>
+
+                <!-- Progress & Score Status -->
+                <div class="flex items-center justify-between md:justify-end space-x-6 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+                    <div class="text-center">
+                        <p class="text-xs text-slate-400 font-semibold uppercase">Kemajuan</p>
+                        <p class="text-lg font-bold text-slate-700"><span id="quiz-current-num">1</span> / <span id="quiz-total-num">30</span></p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-xs text-slate-400 font-semibold uppercase">Markah Semasa</p>
+                        <p id="quiz-live-score" class="text-lg font-bold text-emerald-600">0</p>
+                    </div>
+                    <button onclick="app.reshuffleAndRestart()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl font-semibold flex items-center transition-colors">
+                        <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Rawak Semula
+                    </button>
+                </div>
+            </div>
+
+            <!-- Global Progress Bar -->
+            <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+                <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-pink-500 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <!-- Question Card Box -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-slate-100 space-y-6">
+                
+                <!-- Topic Tag & Question Text -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span id="question-topic-tag" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600">Topik Soalan</span>
+                        <span id="question-type-badge" class="text-xs font-semibold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-lg">Pilihan Berganda</span>
+                    </div>
+                    <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-relaxed">
+                        Teks Soalan Peperiksaan...
+                    </h3>
+                </div>
+
+                <!-- Dynamic Diagram / Graphic Container -->
+                <div id="question-diagram-container" class="hidden my-4 p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-center overflow-x-auto">
+                    <!-- SVG Visual Graphic inserted via JS -->
+                </div>
+
+                <!-- Options / Answers Area -->
+                <div id="question-options-container" class="grid grid-cols-1 gap-3.5 pt-2">
+                    <!-- Options buttons rendered dynamically -->
+                </div>
+
+                <!-- Explanation Box (Shows after checking answer) -->
+                <div id="explanation-box" class="hidden p-5 rounded-2xl bg-indigo-50/80 border border-indigo-100 space-y-2">
+                    <div class="flex items-center text-indigo-900 font-bold text-sm">
+                        <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Penerangan & Jawapan Betul:
+                    </div>
+                    <p id="explanation-text" class="text-sm text-indigo-950 leading-relaxed font-medium">
+                        Penjelasan jawapan akan dipaparkan di sini.
+                    </p>
+                </div>
+
+                <!-- Action Controls Bar -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-100">
+                    <button id="btn-prev-question" onclick="app.prevQuestion()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 transition-colors flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Sebelumnya
+                    </button>
+
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <button id="btn-check-answer" onclick="app.checkAnswer()" class="w-full sm:w-auto flex-1 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-colors btn-bounce text-center">
+                            Semak Jawapan
+                        </button>
+                        <button id="btn-next-question" onclick="app.nextQuestion()" class="w-full sm:w-auto flex-1 px-6 py-3 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center btn-bounce">
+                            Seterusnya
+                            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- QUESTION NUMBER INDICATOR BAR AT THE BOTTOM -->
+            <div class="bg-white rounded-3xl p-5 card-shadow border border-slate-100 space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center">
+                        <svg class="w-4 h-4 mr-1.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                        Status Nombor Soalan (Tekan untuk lompat):
+                    </span>
+                    <div class="flex items-center space-x-4 text-xs font-semibold text-slate-500">
+                        <span class="flex items-center"><span class="w-3.5 h-3.5 rounded-md bg-emerald-500 inline-block mr-1.5 shadow-xs"></span> Betul (Hijau)</span>
+                        <span class="flex items-center"><span class="w-3.5 h-3.5 rounded-md bg-rose-500 inline-block mr-1.5 shadow-xs"></span> Salah (Merah)</span>
+                        <span class="flex items-center"><span class="w-3.5 h-3.5 rounded-md bg-slate-200 inline-block mr-1.5"></span> Belum Semak</span>
+                    </div>
+                </div>
+
+                <div id="question-numbers-grid" class="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-15 gap-2 pt-1">
+                    <!-- 1..30 Question Number Buttons rendered dynamically via JS -->
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= RESULTS & REVISION VIEW ================= -->
+        <section id="view-results" class="hidden space-y-8">
+            
+            <!-- Result Summary Card -->
+            <div class="bg-white rounded-3xl p-8 card-shadow border border-slate-100 text-center max-w-3xl mx-auto space-y-6">
+                <div class="w-20 h-20 mx-auto rounded-full bg-amber-100 border-4 border-amber-300 flex items-center justify-center text-amber-500 shadow-inner">
+                    <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+
+                <div class="space-y-2">
+                    <span id="result-grade-badge" class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-100 text-emerald-800">Tahap Cemerlang</span>
+                    <h2 class="font-fredoka text-3xl sm:text-4xl font-bold text-slate-800">Tahniah! Anda Telah Menyelesaikan Ujian</h2>
+                    <p id="result-subject-title" class="text-slate-500 font-medium">Modul Bahasa Melayu Tahun 6</p>
+                </div>
+
+                <!-- Final Score Display -->
+                <div class="grid grid-cols-3 gap-4 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                    <div>
+                        <p class="text-xs text-slate-400 font-bold uppercase">Markah Keseluruhan</p>
+                        <p id="result-score-percent" class="text-3xl font-fredoka font-bold text-indigo-600">87%</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-bold uppercase">Jawapan Betul</p>
+                        <p id="result-correct-count" class="text-3xl font-fredoka font-bold text-emerald-600">26 / 30</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 font-bold uppercase">Masa Diambil</p>
+                        <p id="result-time-taken" class="text-3xl font-fredoka font-bold text-purple-600">08:45</p>
+                    </div>
+                </div>
+
+                <!-- Recommendations / Feedback Message -->
+                <p id="result-feedback-msg" class="text-slate-600 text-sm leading-relaxed font-medium bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    Syabas! Pencapaian anda sangat mengagumkan. Kekalkan prestasi untuk terus cemerlang dalam peperiksaan sebenar.
+                </p>
+
+                <!-- Navigation Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <button onclick="app.showDashboard()" class="px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors">
+                        Kembali ke Menu Utama
+                    </button>
+                    <button onclick="app.reshuffleAndRestart()" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition-colors shadow-md flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        Ulang Ujian (Soalan Diacak Baru)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Revision List ("Ulang Kaji Soalan") -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-slate-100 space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h3 class="font-fredoka text-2xl font-bold text-slate-800">Ulang Kaji & Semakan Jawapan</h3>
+                        <p class="text-xs text-slate-500">Semak semula semua soalan, jawapan anda dan penerangan lengkap</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="app.filterReview('all')" id="btn-filter-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white">Semua</button>
+                        <button onclick="app.filterReview('wrong')" id="btn-filter-wrong" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200">Salah Sahaja</button>
+                    </div>
+                </div>
+
+                <!-- Review Items Container -->
+                <div id="review-list-container" class="space-y-4">
+                    <!-- Review items will be generated here dynamically -->
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= DYNAMIC POPUP MODAL FOR CELEBRATION / KEBABOOM ================= -->
+    <div id="feedback-modal-overlay" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+        
+        <!-- Modal Content Container -->
+        <div id="feedback-modal-card" class="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 card-shadow border text-center space-y-5 overflow-hidden transition-all">
+            
+            <!-- Dynamic Icon Container -->
+            <div id="feedback-icon-container" class="w-24 h-24 mx-auto flex items-center justify-center rounded-full text-5xl relative">
+                <!-- Icon or Explosion SVG rendered by JS -->
+            </div>
+
+            <!-- Text Content -->
+            <div class="space-y-2">
+                <h3 id="feedback-title" class="font-fredoka text-3xl font-bold text-slate-800">
+                    YA, BETUL! 🎉
+                </h3>
+                <p id="feedback-message" class="text-sm font-medium text-slate-600 leading-relaxed">
+                    Tahniah! Jawapan anda sangat tepat!
+                </p>
+            </div>
+
+            <!-- Button -->
+            <button onclick="app.closeFeedbackModal()" id="feedback-btn" class="w-full py-3.5 px-6 rounded-2xl font-bold text-white shadow-lg transition-transform btn-bounce font-fredoka text-lg">
+                Teruskan ➔
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-semibold text-slate-600">eBook Interaktif Koleksi Soalan Peperiksaan Tahun 6 &copy; 2026</p>
+            <p class="mt-1 text-slate-400">Direka berasaskan Kurikulum Standard Sekolah Rendah (KSSR Semakan) & Format UASA</p>
+        </div>
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT LOGIC ENGINE ================= -->
+    <script>
+        // Web Audio Synthesizer for interactive sound effects (including explosion)
+        class SoundEngine {
+            constructor() {
+                this.ctx = null;
+                this.muted = false;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) this.ctx = new AudioContext();
+                }
+            }
+
+            playCorrect() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                // Fanfare tune
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+                    gain.gain.setValueAtTime(0, now + idx * 0.08);
+                    gain.gain.linearRampToValueAtTime(0.3, now + idx * 0.08 + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.35);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now + idx * 0.08);
+                    osc.stop(now + idx * 0.08 + 0.35);
+                });
+            }
+
+            playExplosion() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                // Low frequency booming explosion synthesiser
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(30, now + 0.4);
+
+                gain.gain.setValueAtTime(0.5, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.45);
+            }
+
+            playClick() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+        }
+
+        const sound = new SoundEngine();
+
+        // QUESTION BANK DATA STRUCTURE (30 Questions per subject module)
+        const SUBJECTS_DATA = [
+            {
+                id: 'bm',
+                name: 'Bahasa Melayu',
+                icon: '📚',
+                color: 'from-blue-500 to-indigo-600',
+                badgeBg: 'bg-blue-100 text-blue-700',
+                desc: 'Tatabahasa, Pemahaman, Imbuhan, Peribahasa & Ejaan Tahun 6',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Tatabahasa', 'Peribahasa', 'Imbuhan', 'Pemahaman', 'Sintaksis', 'Ejaan & Kosa Kata'];
+                    const topic = topics[index % topics.length];
+                    
+                    const qTemplates = [
+                        {
+                            q: "Pilih ayat yang menggunakan **imbuhan apitan** yang betul.",
+                            opts: ["Ahmad *memperbaiki* basikalnya yang rosak.", "Guru Besar *menerangkan* tentang peraturan sekolah.", "Ibu *memasakkan* adik bubur ayam.", "Kami *menghadiahi* beliau sejambak bunga."],
+                            ans: 0,
+                            exp: "Kata kerja 'memperbaiki' bermaksud menjadikan lebih baik. Imbuhan apitan 'memper-...-i' digunakan dengan tepat mengikut sistem tatabahasa KSSR."
+                        },
+                        {
+                            q: "Antara peribahasa berikut, yang manakah bermaksud **'bergotong-royong atau bekerjasama melakukan sesuatu'**?",
+                            opts: ["Bagai aur dengan tebing", "Seperti katak di bawah tempurung", "Ada gula ada semut", "Seperti cincin dengan permata"],
+                            ans: 0,
+                            exp: "'Bagai aur dengan tebing' menggambarkan semangat tolong-menolong dan kerjasama erat dalam masyarakat."
+                        },
+                        {
+                            q: "Pilih kata ganda yang sesuai: 'Kanak-kanak itu berlari-lari di padang sambil membawa __________ warna-warni.'",
+                            opts: ["bebalon", "layang-layang", "jejari", "kekuda"],
+                            ans: 1,
+                            exp: "'Layang-layang' ialah kata ganda penuh yang merujuk kepada permainan terbang berbenang di padang."
+                        },
+                        {
+                            q: "Pilih penanda wacana yang paling tepat: 'Aiman sangat rajin mengulang kaji pelajaran. __________, dia berjaya mendapat keputusan cemerlang.'",
+                            opts: ["Sehubungan dengan itu", "Oleh sebab itu", "Walau bagaimanapun", "Di samping itu"],
+                            ans: 1,
+                            exp: "'Oleh sebab itu' menunjukkan hubungan sebab dan akibat (sebab rajin, akibatnya cemerlang)."
+                        },
+                        {
+                            q: "Apakah maksud rangkai kata **'mencuci mata'** dalam simpulan bahasa?",
+                            opts: ["Basuh muka dengan air bersih", "Melihat-lihat pemandangan yang indah", "Membeli barang dengan banyak", "Menangis kerana sedih"],
+                            ans: 1,
+                            exp: "'Mencuci mata' bermaksud bersiarsiar untuk melihat sesuatu yang indah atau menarik perhatian."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `bm_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp
+                    };
+                })
+            },
+            {
+                id: 'bi',
+                name: 'Bahasa Inggeris',
+                icon: '🔤',
+                color: 'from-purple-500 to-pink-600',
+                badgeBg: 'bg-purple-100 text-purple-700',
+                desc: 'Grammar, Tenses, Vocabulary, Idioms & Reading Comprehension Year 6',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Grammar', 'Vocabulary', 'Prepositions', 'Subject-Verb Agreement', 'Idioms'];
+                    const topic = topics[index % topics.length];
+                    
+                    const qTemplates = [
+                        {
+                            q: "Choose the correct verb: 'Neither Sarah nor her brothers ________ going to the science exhibition today.'",
+                            opts: ["is", "are", "was", "were"],
+                            ans: 1,
+                            exp: "When using 'Neither... nor', the verb agrees with the subject closest to it. Here, 'her brothers' is plural, so 'are' is used."
+                        },
+                        {
+                            q: "Identify the idiom that means **'to accomplish two tasks with one single action'**:",
+                            opts: ["A piece of cake", "Kill two birds with one stone", "Break a leg", "Bite the bullet"],
+                            ans: 1,
+                            exp: "'Kill two birds with one stone' means achieving two objectives through a single effort."
+                        },
+                        {
+                            q: "Fill in the blank with the correct preposition: 'The new student is very good ________ solving mathematical problems.'",
+                            opts: ["in", "at", "on", "with"],
+                            ans: 1,
+                            exp: "We use the preposition 'at' after adjectives like 'good', 'bad', or 'clever' when describing skills."
+                        },
+                        {
+                            q: "Select the sentence with the correct past continuous tense:",
+                            opts: ["They were play football when it started raining.", "They were playing football when it started to rain.", "They played football while it was rain.", "They are playing football when rain comes."],
+                            ans: 1,
+                            exp: "Past continuous format is 'was/were + verb-ing' interrupted by a past simple action ('started')."
+                        },
+                        {
+                            q: "What is the synonym of the word **'Eager'**?",
+                            opts: ["Keen", "Lazy", "Reluctant", "Quiet"],
+                            ans: 0,
+                            exp: "'Eager' means enthusiastic or keen to do something."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `bi_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Question ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp
+                    };
+                })
+            },
+            {
+                id: 'math',
+                name: 'Matematik',
+                icon: '📐',
+                color: 'from-emerald-500 to-teal-600',
+                badgeBg: 'bg-emerald-100 text-emerald-700',
+                desc: 'Nombor & Operasi, Pecahan, Peratus, Masa, Geometri & Nisbah',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Nombor Bulat', 'Pecahan & Peratus', 'Ruang & Shapes', 'Masa & Waktu', 'Nisbah & Kadaran'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Sebuah kotak mengandungi 40 biji guli. 25% daripadanya berwarna biru dan selebihnya merah. Berapakah bilangan guli **merah**?",
+                            opts: ["10 biji", "25 biji", "30 biji", "15 biji"],
+                            ans: 2,
+                            exp: "Guli biru = 25% daripada 40 = 10 biji. Maka guli merah = 40 - 10 = 30 biji.",
+                            diagram: `<svg width="180" height="80" viewBox="0 0 180 80"><rect x="10" y="15" width="40" height="50" rx="8" fill="#3B82F6"/><text x="30" y="45" fill="#FFF" font-weight="bold" text-anchor="middle">10 Biru</text><rect x="60" y="15" width="110" height="50" rx="8" fill="#EF4444"/><text x="115" y="45" fill="#FFF" font-weight="bold" text-anchor="middle">30 Merah (75%)</text></svg>`
+                        },
+                        {
+                            q: "Nisbah bilangan buku fiksyen kepada buku bukan fiksyen di pusat sumber ialah 3 : 5. Jika terdapat 150 buah buku fiksyen, berapakah jumlah buku bukan fiksyen?",
+                            opts: ["200", "250", "300", "180"],
+                            ans: 1,
+                            exp: "3 bahagian = 150 buku. Maka 1 bahagian = 150 / 3 = 50 buku. Oleh itu, 5 bahagian bukan fiksyen = 5 x 50 = 250 buku."
+                        },
+                        {
+                            q: "Apakah luas segi tiga tapak 12 cm dan tinggi 8 cm?",
+                            opts: ["96 cm²", "48 cm²", "24 cm²", "64 cm²"],
+                            ans: 1,
+                            exp: "Rumus luas segi tiga = ½ x Tapak x Tinggi = ½ x 12 cm x 8 cm = 48 cm².",
+                            diagram: `<svg width="160" height="90" viewBox="0 0 160 90"><polygon points="20,75 140,75 140,15" fill="#E0E7FF" stroke="#4F46E5" stroke-width="2"/><text x="80" y="86" font-size="12" fill="#4F46E5" text-anchor="middle">Tapak = 12 cm</text><text x="148" y="45" font-size="12" fill="#4F46E5">Tinggi = 8 cm</text></svg>`
+                        },
+                        {
+                            q: "Tukarkan 3.45 kg kepada gram (g).",
+                            opts: ["345 g", "3450 g", "34.5 g", "34500 g"],
+                            ans: 1,
+                            exp: "1 kg = 1000 g. Jadi, 3.45 kg x 1000 = 3450 g."
+                        },
+                        {
+                            q: "Sebuah kereta bertolak jam 0830 dan tiba di destinasi pada jam 1115. Berapakah tempoh masa perjalanannya?",
+                            opts: ["2 jam 45 minit", "2 jam 15 minit", "3 jam 15 minit", "2 jam 30 minit"],
+                            ans: 0,
+                            exp: "Dari 0830 hingga 1115: Dari 0830 ke 1030 = 2 jam. Dari 1030 ke 1115 = 45 minit. Jumlah = 2 jam 45 minit."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `math_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp,
+                        diagram: template.diagram || null
+                    };
+                })
+            },
+            {
+                id: 'sains',
+                name: 'Sains',
+                icon: '🔬',
+                color: 'from-amber-500 to-orange-600',
+                badgeBg: 'bg-amber-100 text-amber-700',
+                desc: 'Mikroorganisma, Daya & Kelajuan, Pengawetan & Mesin Kompleks',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Mikroorganisma', 'Interaksi Hidupan', 'Daya & Tenaga', 'Pengawetan Makanan', 'Mesin & Teknologi'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Manakah antara berikut merupakan kumpulan mikroorganisma yang digunakan dalam pembuatan **roti dan yis**?",
+                            opts: ["Fungi / Yis", "Bakteria E.coli", "Virus Covid-19", "Protozoa Amoeba"],
+                            ans: 0,
+                            exp: "Yis adalah sejenis fungi berguna yang membebaskan gas karbon dioksida semasa proses respirasi untuk melembutkan dan membesarkan doh roti.",
+                            diagram: `<svg width="140" height="70" viewBox="0 0 140 70"><circle cx="40" cy="35" r="22" fill="#FDE68A" stroke="#D97706" stroke-width="2"/><circle cx="90" cy="35" r="28" fill="#FDE68A" stroke="#D97706" stroke-width="2"/><text x="65" y="40" font-size="10" font-weight="bold" fill="#B45309" text-anchor="middle">Fungi / Yis</text></svg>`
+                        },
+                        {
+                            q: "Sebuah kereta bergerak sejauh **180 km** dalam masa **2 jam**. Berapakah kelajuan kereta tersebut?",
+                            opts: ["90 km/j", "360 km/j", "80 km/j", "100 km/j"],
+                            ans: 0,
+                            exp: "Rumus Kelajuan = Jarak / Masa = 180 km / 2 jam = 90 km/j."
+                        },
+                        {
+                            q: "Apakah faedah pengawetan makanan secara **pempasteuran** untuk susu?",
+                            opts: ["Membunuh bakteria tanpa merosakkan rasa dan khasiat", "Menghilangkan semua air dalam susu", "Menambah rasa manis", "Menjadikan susu beku keras"],
+                            ans: 0,
+                            exp: "Pempasteuran memanaskan susu pada suhu tertentu kemudian mendinginkannya dengan cepat untuk membunuh mikroorganisma jahat."
+                        },
+                        {
+                            q: "Manakah jenis interaksi antara **Ikan Remora dan Ikan Jerung**?",
+                            opts: ["Komensalisme", "Mutualisme", "Parasitisme", "Persaingan"],
+                            ans: 0,
+                            exp: "Komensalisme ialah interaksi yang memberi manfaat kepada satu pihak (Ikan Remora mendapat makanan/perlindungan) tanpa merugikan atau menguntungkan pihak lagi satu (Ikan Jerung)."
+                        },
+                        {
+                            q: "Mesin kompleks terdiri daripada gabungan beberapa jenis mesin ringkas. Manakah mesin ringkas yang terdapat pada **gunting**?",
+                            opts: ["Tuas dan Baji", "Roda dan Gandar", "Takal dan Satah Meringkat", "Skru dan Takal"],
+                            ans: 0,
+                            exp: "Gunting menggabungkan Tuas (titik fulkrum/daya) dan Baji (bilah tajam pemotong)."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `sains_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp,
+                        diagram: template.diagram || null
+                    };
+                })
+            },
+            {
+                id: 'pi',
+                name: 'Pendidikan Islam',
+                icon: '🌙',
+                color: 'from-teal-500 to-emerald-600',
+                badgeBg: 'bg-teal-100 text-teal-700',
+                desc: 'Al-Quran, Aqidah, Ibadah, Sirah Nabi, Adab & Jawi Tahun 6',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Al-Quran', 'Aqidah', 'Ibadah', 'Sirah Rasulullah', 'Adab & Akhlak'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Apakah maksud nama Allah **Al-Hasib**?",
+                            opts: ["Maha Penghitung / Maha Mencukupi", "Maha Pencipta", "Maha Pengampun", "Maha Mendengar"],
+                            ans: 0,
+                            exp: "Al-Hasib bermaksud Allah Maha Penghitung setiap amalan hamba-Nya dan Maha Mencukupi segala keperluan makhluk."
+                        },
+                        {
+                            q: "Apakah hukum menunaikan **Solat Jumaat** bagi lelaki beragama Islam yang cukup syarat?",
+                            opts: ["Fardhu Ain", "Fardhu Kifayah", "Sunat Muakkad", "Harus"],
+                            ans: 0,
+                            exp: "Solat Jumaat adalah Fardhu Ain iaitu wajib dilaksanakan oleh setiap individu lelaki Muslim yang mukallaf."
+                        },
+                        {
+                            q: "Peristiwa ikrar setia para sahabat di bawah pokok sebelum Perjanjian Hudaibiyah dikenali sebagai:",
+                            opts: ["Bai'atur Ridwan", "Hijrah Madinah", "Israk Mikraj", "Fathu Makkah"],
+                            ans: 0,
+                            exp: "Bai'atur Ridwan ialah ikrar taat setia para sahabat kepada Rasulullah SAW untuk membela Uthman bin Affan R.A."
+                        },
+                        {
+                            q: "Antara berikut, manakah **Adab Terhadap Alam Sekitar** mengikut ajaran Islam?",
+                            opts: ["Mengelakkan pembakaran terbuka dan memelihara kebersihan", "Membawa sampah ke dalam sungai", "Menebang pokok secara haram", "Membazirkan penggunaan air secara berlebihan"],
+                            ans: 0,
+                            exp: "Islam amat menekankan pemeliharaan alam sekitar sebagai amanah Allah SWT di muka bumi."
+                        },
+                        {
+                            q: "Pilih hukum tajwid bagi pertemuan Nun Sukun (نْ) dengan huruf Ba (ب):",
+                            opts: ["Iqlab", "Izhar Halqi", "Iqfa' Hakiki", "Idgham Maal Ghunnah"],
+                            ans: 0,
+                            exp: "Iqlab berlaku apabila Nun Sukun atau Tanwin bertemu huruf Ba (ب), di mana bunyinya ditukarkan kepada Mim (م) berserta dengung."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `pi_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp
+                    };
+                })
+            },
+            {
+                id: 'psv',
+                name: 'Pendidikan Seni Visual',
+                icon: '🎨',
+                color: 'from-pink-500 to-rose-600',
+                badgeBg: 'bg-pink-100 text-pink-700',
+                desc: 'Unsur Seni, Prinsip Rekaan, Bahasa Seni Visual & Teknik Kraf',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Unsur Seni', 'Prinsip Rekaan', 'Menggambar', 'Membentuk & Membuat Binaan', 'Kraf Tradisional'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Campuran warna asas **Biru + Kuning** akan menghasilkan warna sekunder apakah?",
+                            opts: ["Hijau", "Jingga", "Ungu", "Coklat"],
+                            ans: 0,
+                            exp: "Campuran warna asas Biru dan Kuning menghasilkan warna sekunder Hijau.",
+                            diagram: `<svg width="180" height="65" viewBox="0 0 180 65"><circle cx="35" cy="32" r="20" fill="#3B82F6"/><text x="60" y="36" font-size="16" font-weight="bold">+</text><circle cx="85" cy="32" r="20" fill="#FACC15"/><text x="110" y="36" font-size="16" font-weight="bold">=</text><circle cx="145" cy="32" r="20" fill="#22C55E"/></svg>`
+                        },
+                        {
+                            q: "Teknik menghasilkan karya seni dengan menampal pelbagai bahan berjalur/cebisan pada permukaan digelar:",
+                            opts: ["Kolej (Collage)", "Gurisan", "Asemblej", "Cetakan"],
+                            ans: 0,
+                            exp: "Kolaj merupakan teknik menampal bahan seperti kertas, kain, atau bahan terbuang pada permukaan 2D."
+                        },
+                        {
+                            q: "Apakah prinsip rekaan yang memberikan kesan **pergerakan dan kelajuan** dalam sesebuah lukisan?",
+                            opts: ["Irama dan Pergerakan", "Imbangan", "Penegasan", "Kontras"],
+                            ans: 0,
+                            exp: "Prinsip Irama dan Pergerakan wujud melalui ulangan unsur seni secara teratur untuk memandu pandangan mata."
+                        },
+                        {
+                            q: "Manakah antara berikut karya berbentuk **3 Dimensi (3D)**?",
+                            opts: ["Arca Stabil / Patung", "Lukisan Pensel", "Cetakan Stensil", "Catan Cat Air"],
+                            ans: 0,
+                            exp: "Arca mempunyai saiz panjang, lebar dan kedalaman (3D) serta boleh dilihat dari pelbagai sudut."
+                        },
+                        {
+                            q: "Proses mencelup kain dengan lilin malam dalam seni kraf tradisional Malaysia merujuk kepada:",
+                            opts: ["Seni Batik Hand-drawn/Canting", "Ukiran Kayu", "Seni Tenunan Songket", "Anyaman Mengkuang"],
+                            ans: 0,
+                            exp: "Batik menggunakan lilin cair sebagai bahan penghalang warna pada kain."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `psv_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp,
+                        diagram: template.diagram || null
+                    };
+                })
+            },
+            {
+                id: 'geografi',
+                name: 'Geografi & Sejarah',
+                icon: '🗺️',
+                color: 'from-sky-500 to-blue-600',
+                badgeBg: 'bg-sky-100 text-sky-700',
+                desc: 'Kedudukan Malaysia, Bentuk Muka Bumi, Pembentukan Negara & Warisan',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Kedudukan & Peta Malaysia', 'Bentuk Muka Bumi', 'Pembentukan Malaysia 1963', 'Negeri-negeri di Malaysia', 'Warisan Negara'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Manakah laut yang memisahkan **Semenanjung Malaysia** dengan **Sabah & Sarawak**?",
+                            opts: ["Laut China Selatan", "Selat Melaka", "Laut Sulu", "Laut Celebes"],
+                            ans: 0,
+                            exp: "Laut China Selatan terletak di tengah-tengah antara Semenanjung Malaysia dan Wilayah Borneo (Sabah & Sarawak).",
+                            diagram: `<svg width="200" height="70" viewBox="0 0 200 70"><rect x="10" y="15" width="45" height="40" rx="8" fill="#93C5FD"/><text x="32" y="40" font-size="9" font-weight="bold" text-anchor="middle">Semenanjung</text><rect x="65" y="20" width="70" height="30" rx="4" fill="#3B82F6"/><text x="100" y="38" font-size="8" fill="#FFF" font-weight="bold" text-anchor="middle">Laut China Selatan</text><rect x="140" y="15" width="50" height="40" rx="8" fill="#93C5FD"/><text x="165" y="40" font-size="9" font-weight="bold" text-anchor="middle">Sabah/Sarawak</text></svg>`
+                        },
+                        {
+                            q: "Siapakah **Bapa Kemerdekaan Malaysia** yang memasyhurkan kemerdekaan pada 31 Ogos 1957?",
+                            opts: ["Tunku Abdul Rahman Putra Al-Haj", "Tun Abdul Razak", "Tun Hussein Onn", "Tun Dr. Mahathir"],
+                            ans: 0,
+                            exp: "Tunku Abdul Rahman Putra Al-Haj merupakan Perdana Menteri Malaysia Pertama dan digelar Bapa Kemerdekaan."
+                        },
+                        {
+                            q: "Apakah banjaran gunung terpanjang di Semenanjung Malaysia yang dikenali sebagai 'tulang belakang' Semenanjung?",
+                            opts: ["Banjaran Titiwangsa", "Banjaran Crocker", "Banjaran Bintang", "Banjaran Tama Abu"],
+                            ans: 0,
+                            exp: "Banjaran Titiwangsa menganjur dari utara Thailand hingga ke Negeri Sembilan."
+                        },
+                        {
+                            q: "Tarikh rasmi **Pembentukan Malaysia** menggabungkan Tanah Melayu, Sabah, Sarawak dan Singapura (keluar 1965) ialah:",
+                            opts: ["16 September 1963", "31 Ogos 1957", "13 Mei 1969", "1 Januari 1960"],
+                            ans: 0,
+                            exp: "Malaysia ditubuhkan secara rasmi pada 16 September 1963 dan disambut sebagai Hari Malaysia."
+                        },
+                        {
+                            q: "Apakah ibu negeri bagi negeri **Sarawak**?",
+                            opts: ["Kuching", "Kota Kinabalu", "Miri", "Sibu"],
+                            ans: 0,
+                            exp: "Ibu negeri Sarawak ialah Kuching, manakala Kota Kinabalu ialah ibu negeri Sabah."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `geo_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp,
+                        diagram: template.diagram || null
+                    };
+                })
+            },
+            {
+                id: 'robotik',
+                name: 'Robotik & RBT',
+                icon: '🤖',
+                color: 'from-violet-500 to-purple-700',
+                badgeBg: 'bg-violet-100 text-violet-700',
+                desc: 'Pengaturcaraan, Papan Mikropengawal, Sensor & Sistem Mekanikal',
+                questions: Array.from({ length: 30 }, (_, index) => {
+                    const topics = ['Pengaturcaraan Block', 'Sensor & Suis', 'Mikropengawal (Micro:bit)', 'Peluang & Kerjaya Robotik', 'Litar Elektrik & Motor'];
+                    const topic = topics[index % topics.length];
+
+                    const qTemplates = [
+                        {
+                            q: "Komponen manakah pada robot yang berfungsi sebagai **'mata atau deria'** untuk mengesan halangan di hadapan?",
+                            opts: ["Sensor Ultrasonik (Distance Sensor)", "Motor Servos", "Bateri Li-Po", "Papan Litar"],
+                            ans: 0,
+                            exp: "Sensor Ultrasonik mengukur jarak dengan memancarkan gelombang bunyi tinggi untuk mengesan objek halangan.",
+                            diagram: `<svg width="150" height="70" viewBox="0 0 150 70"><rect x="15" y="15" width="120" height="40" rx="10" fill="#4C1D95"/><circle cx="45" cy="35" r="12" fill="#E9D5FF" stroke="#A855F7" stroke-width="2"/><circle cx="105" cy="35" r="12" fill="#E9D5FF" stroke="#A855F7" stroke-width="2"/><text x="75" y="62" font-size="9" fill="#6B21A8" font-weight="bold" text-anchor="middle">Sensor Ultrasonik</text></svg>`
+                        },
+                        {
+                            q: "Apakah fungsi komponen **Motor AT (DC Motor)** dalam binaan projek robotik?",
+                            opts: ["Menukarkan tenaga elektrik kepada tenaga mekanikal (putaran roda)", "Mengelurkan bunyi amaran", "Menyimpan kod atur cara", "Mengesan suhu bilik"],
+                            ans: 0,
+                            exp: "Motor DC memutar aci roda untuk membolehkan robot bergerak ke hadapan, ke belakang, atau berputar."
+                        },
+                        {
+                            q: "Dalam pengaturcaraan berasaskan blok (seperti MakeCode/Scratch), struktur **'if... then... else'** digunakan untuk:",
+                            opts: ["Membuat keputusan berdasarkan syarat tertentu", "Mengulang arahan tanpa henti", "Mematikan kuasa robot", "Memadamkan lampu LED"],
+                            ans: 0,
+                            exp: "Struktur kawalan pilihan (if-then-else) membolehkan robot membuat keputusan contohnya: JIKA ada halangan, MAKA belok kanan, JIKA TIADA terus berjalan."
+                        },
+                        {
+                            q: "Papan mikropengawal bersaiz poket yang popular digunakan dalam mata pelajaran RBT Tahun 6 ialah:",
+                            opts: ["BBC micro:bit / Arduino", "Raspberry Pi 4", "PlayStation 5", "USB Flashdrive"],
+                            ans: 0,
+                            exp: "BBC micro:bit ialah papan mikropengawal pendidikan yang mempunyai LED display, butang masukan, dan pin keterambungan."
+                        },
+                        {
+                            q: "Apakah fungsi **Buzzer (Pembuat Bunyi)** dalam litar elektronik robot?",
+                            opts: ["Menghasilkan isyarat audio/bunyi amaran", "Mengawal kelajuan pergerakan", "Membekalkan voltan arus", "Mengesan warna garisan"],
+                            ans: 0,
+                            exp: "Buzzer menukarkan isyarat elektrik kepada gelombang bunyi seperti 'beep' amaran keselamatan."
+                        }
+                    ];
+                    const template = qTemplates[index % qTemplates.length];
+                    return {
+                        id: `robotik_${index + 1}`,
+                        topic: topic,
+                        type: 'MCQ',
+                        question: `[Soalan ${index + 1}] ${template.q}`,
+                        options: template.opts,
+                        correctIndex: template.ans,
+                        explanation: template.exp,
+                        diagram: template.diagram || null
+                    };
+                })
+            }
+        ];
+
+        // APP CONTROLLER ENGINE
+        class AppEngine {
+            constructor() {
+                this.currentSubject = null;
+                this.questionsList = [];
+                this.currentIndex = 0;
+                this.userAnswers = {}; // { questionId: selectedOptionIndex }
+                this.isChecked = {};  // { questionId: boolean }
+                this.globalScore = 0;
+                this.startTime = null;
+            }
+
+            init() {
+                this.renderDashboardCards();
+                this.updateGlobalBadge();
+            }
+
+            toggleSound() {
+                sound.muted = !sound.muted;
+                document.getElementById('sound-icon-on').classList.toggle('hidden', sound.muted);
+                document.getElementById('sound-icon-off').classList.toggle('hidden', !sound.muted);
+            }
+
+            showDashboard() {
+                sound.playClick();
+                document.getElementById('view-dashboard').classList.remove('hidden');
+                document.getElementById('view-quiz').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Shuffle array helper
+            shuffleArray(array) {
+                const arr = [...array];
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            // Shuffle options for a question
+            shuffleQuestionOptions(qObj) {
+                const originalOptions = [...qObj.options];
+                const correctAnswerText = originalOptions[qObj.correctIndex];
+                
+                const shuffledOpts = this.shuffleArray(originalOptions);
+                const newCorrectIndex = shuffledOpts.indexOf(correctAnswerText);
+
+                return {
+                    ...qObj,
+                    options: shuffledOpts,
+                    correctIndex: newCorrectIndex
+                };
+            }
+
+            renderDashboardCards() {
+                const grid = document.getElementById('subject-cards-grid');
+                grid.innerHTML = SUBJECTS_DATA.map(subj => `
+                    <div class="bg-white rounded-3xl p-6 card-shadow border border-slate-100 flex flex-col justify-between hover:shadow-xl transition-all transform hover:-translate-y-1">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-3xl p-3 bg-slate-50 rounded-2xl border border-slate-100">${subj.icon}</span>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-full ${subj.badgeBg}">30 Soalan</span>
+                            </div>
+                            <div>
+                                <h4 class="font-fredoka text-xl font-bold text-slate-800">${subj.name}</h4>
+                                <p class="text-xs text-slate-500 mt-1 line-clamp-2">${subj.desc}</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 space-y-3">
+                            <button onclick="app.startSubjectQuiz('${subj.id}')" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r ${subj.color} text-white font-bold text-sm shadow-md hover:opacity-95 transition-opacity btn-bounce flex items-center justify-center">
+                                Mula Latihan Modul
+                                <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            startSubjectQuiz(subjectId) {
+                sound.playClick();
+                const subj = SUBJECTS_DATA.find(s => s.id === subjectId);
+                if (!subj) return;
+
+                this.currentSubject = subj;
+                // Randomize questions & options on entry
+                const randomizedPool = this.shuffleArray(subj.questions).map(q => this.shuffleQuestionOptions(q));
+                
+                this.questionsList = randomizedPool;
+                this.currentIndex = 0;
+                this.userAnswers = {};
+                this.isChecked = {};
+                this.startTime = new Date();
+
+                // Update UI elements
+                document.getElementById('quiz-subject-badge').innerText = subj.name;
+                document.getElementById('quiz-subject-title').innerText = `Latihan Formatif: ${subj.name}`;
+                document.getElementById('quiz-total-num').innerText = this.questionsList.length;
+
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-quiz').classList.remove('hidden');
+
+                this.renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            startRandomQuiz() {
+                sound.playClick();
+                let allQuestions = [];
+                SUBJECTS_DATA.forEach(s => {
+                    allQuestions = allQuestions.concat(s.questions);
+                });
+
+                const random30 = this.shuffleArray(allQuestions).slice(0, 30).map(q => this.shuffleQuestionOptions(q));
+                
+                this.currentSubject = {
+                    id: 'mix',
+                    name: 'Ujian Campuran Cabaran',
+                    color: 'from-amber-500 to-rose-500'
+                };
+                this.questionsList = random30;
+                this.currentIndex = 0;
+                this.userAnswers = {};
+                this.isChecked = {};
+                this.startTime = new Date();
+
+                document.getElementById('quiz-subject-badge').innerText = "Cabaran Masa";
+                document.getElementById('quiz-subject-title').innerText = "Ujian Campuran Semua Mata Pelajaran";
+                document.getElementById('quiz-total-num').innerText = "30";
+
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-quiz').classList.remove('hidden');
+
+                this.renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            reshuffleAndRestart() {
+                if (this.currentSubject) {
+                    if (this.currentSubject.id === 'mix') {
+                        this.startRandomQuiz();
+                    } else {
+                        this.startSubjectQuiz(this.currentSubject.id);
+                    }
+                }
+            }
+
+            jumpToQuestion(index) {
+                sound.playClick();
+                this.currentIndex = index;
+                this.renderQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            renderQuestion() {
+                const q = this.questionsList[this.currentIndex];
+                if (!q) return;
+
+                // Progress status
+                document.getElementById('quiz-current-num').innerText = this.currentIndex + 1;
+                const percent = ((this.currentIndex + 1) / this.questionsList.length) * 100;
+                document.getElementById('quiz-progress-bar').style.width = `${percent}%`;
+
+                // Live score calculation
+                let correctSoFar = 0;
+                Object.keys(this.userAnswers).forEach(qId => {
+                    const qObj = this.questionsList.find(item => item.id === qId);
+                    if (qObj && this.isChecked[qId] && this.userAnswers[qId] === qObj.correctIndex) {
+                        correctSoFar++;
+                    }
+                });
+                document.getElementById('quiz-live-score').innerText = `${correctSoFar} Bintang`;
+
+                // Topic & Text
+                document.getElementById('question-topic-tag').innerText = q.topic || 'Ujian Peperiksaan';
+                document.getElementById('question-text').innerHTML = q.question;
+
+                // Diagram
+                const diagramBox = document.getElementById('question-diagram-container');
+                if (q.diagram) {
+                    diagramBox.innerHTML = q.diagram;
+                    diagramBox.classList.remove('hidden');
+                } else {
+                    diagramBox.classList.add('hidden');
+                    diagramBox.innerHTML = '';
+                }
+
+                // Render Options
+                const optionsBox = document.getElementById('question-options-container');
+                const selectedOpt = this.userAnswers[q.id];
+                const checked = this.isChecked[q.id];
+
+                optionsBox.innerHTML = q.options.map((optText, idx) => {
+                    let borderClass = 'border-slate-200 bg-white hover:border-indigo-400 hover:bg-slate-50';
+                    let badgeClass = 'bg-slate-100 text-slate-600';
+                    let letter = String.fromCharCode(65 + idx); // A, B, C, D
+
+                    if (selectedOpt === idx) {
+                        borderClass = 'border-indigo-600 bg-indigo-50/70 shadow-sm ring-2 ring-indigo-500/20';
+                        badgeClass = 'bg-indigo-600 text-white';
+                    }
+
+                    if (checked) {
+                        if (idx === q.correctIndex) {
+                            borderClass = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold ring-2 ring-emerald-500/30';
+                            badgeClass = 'bg-emerald-600 text-white';
+                        } else if (selectedOpt === idx && idx !== q.correctIndex) {
+                            borderClass = 'border-rose-500 bg-rose-50 text-rose-950 ring-2 ring-rose-500/30';
+                            badgeClass = 'bg-rose-600 text-white';
+                        }
+                    }
+
+                    return `
+                        <button onclick="app.selectOption(${idx})" ${checked ? 'disabled' : ''} class="p-4 rounded-2xl border text-left transition-all flex items-center space-x-3.5 ${borderClass} btn-bounce">
+                            <span class="w-8 h-8 rounded-xl ${badgeClass} font-bold text-sm flex items-center justify-center shrink-0">
+                                ${letter}
+                            </span>
+                            <span class="text-sm sm:text-base font-medium">${optText}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                // Explanation Box Handling
+                const expBox = document.getElementById('explanation-box');
+                const expText = document.getElementById('explanation-text');
+                if (checked) {
+                    expText.innerHTML = q.explanation;
+                    expBox.classList.remove('hidden');
+                } else {
+                    expBox.classList.add('hidden');
+                }
+
+                // Render Bottom Question Numbers Grid (1 to 30)
+                this.renderQuestionNumbersGrid();
+
+                // Navigation buttons disable state
+                document.getElementById('btn-prev-question').disabled = this.currentIndex === 0;
+                document.getElementById('btn-prev-question').classList.toggle('opacity-50', this.currentIndex === 0);
+            }
+
+            renderQuestionNumbersGrid() {
+                const gridContainer = document.getElementById('question-numbers-grid');
+                gridContainer.innerHTML = this.questionsList.map((q, idx) => {
+                    const isCurrent = idx === this.currentIndex;
+                    const checked = this.isChecked[q.id];
+                    const userAns = this.userAnswers[q.id];
+
+                    let btnStyle = "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+
+                    if (checked) {
+                        if (userAns === q.correctIndex) {
+                            // Correct -> GREEN
+                            btnStyle = "bg-emerald-500 text-white font-bold border-emerald-600 shadow-xs";
+                        } else {
+                            // Incorrect -> RED
+                            btnStyle = "bg-rose-500 text-white font-bold border-rose-600 shadow-xs";
+                        }
+                    } else if (userAns !== undefined) {
+                        // Answered but not checked yet
+                        btnStyle = "bg-indigo-100 text-indigo-800 font-bold border-indigo-300";
+                    }
+
+                    const activeRing = isCurrent ? "ring-2 ring-indigo-600 ring-offset-2 scale-110 z-10 font-bold" : "";
+
+                    return `
+                        <button onclick="app.jumpToQuestion(${idx})" class="h-9 w-full rounded-xl border text-xs flex items-center justify-center transition-all ${btnStyle} ${activeRing}">
+                            ${idx + 1}
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            selectOption(index) {
+                const q = this.questionsList[this.currentIndex];
+                if (this.isChecked[q.id]) return;
+
+                sound.playClick();
+                this.userAnswers[q.id] = index;
+                this.renderQuestion();
+            }
+
+            checkAnswer() {
+                const q = this.questionsList[this.currentIndex];
+                if (this.userAnswers[q.id] === undefined) {
+                    alert("Sila pilih satu jawapan terlebih dahulu!");
+                    return;
+                }
+
+                if (this.isChecked[q.id]) return; // Already checked
+
+                this.isChecked[q.id] = true;
+                const isCorrect = this.userAnswers[q.id] === q.correctIndex;
+
+                this.renderQuestion();
+
+                // Trigger Popups & Sounds
+                if (isCorrect) {
+                    sound.playCorrect();
+                    this.showFeedbackModal(true);
+                } else {
+                    sound.playExplosion();
+                    this.showFeedbackModal(false);
+                }
+            }
+
+            // SHOW POPUP MODAL FOR "YA, BETUL!" OR "KEBABOOMMMM!"
+            showFeedbackModal(isCorrect) {
+                const overlay = document.getElementById('feedback-modal-overlay');
+                const card = document.getElementById('feedback-modal-card');
+                const iconBox = document.getElementById('feedback-icon-container');
+                const title = document.getElementById('feedback-title');
+                const message = document.getElementById('feedback-message');
+                const btn = document.getElementById('feedback-btn');
+
+                if (isCorrect) {
+                    // CELEBRATION POPUP
+                    card.className = "relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-emerald-200 text-center space-y-5 overflow-hidden animate-celeb";
+                    iconBox.className = "w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-emerald-100 text-emerald-600 text-5xl relative";
+                    iconBox.innerHTML = `🎉`;
+                    
+                    title.className = "font-fredoka text-3xl font-bold text-emerald-600";
+                    title.innerText = "YA, BETUL! 🎉";
+
+                    message.innerText = "Tahniah! Jawapan anda sangat tepat. Teruskan semangat ini!";
+                    btn.className = "w-full py-3.5 px-6 rounded-2xl font-bold text-white bg-emerald-500 hover:bg-emerald-600 shadow-lg shadow-emerald-500/30 transition-transform btn-bounce font-fredoka text-lg";
+                    btn.innerText = "Teruskan ➔";
+                } else {
+                    // KEBABOOMMMM POPUP
+                    card.className = "relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 card-shadow border border-rose-200 text-center space-y-5 overflow-hidden animate-shake animate-boom";
+                    iconBox.className = "w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-rose-100 text-rose-600 text-5xl relative";
+                    iconBox.innerHTML = `💥`;
+
+                    title.className = "font-fredoka text-3xl font-bold text-rose-600 tracking-wider";
+                    title.innerText = "KEBABOOMMMM! 💥";
+
+                    message.innerText = "Aduhai, jawapan kurang tepat! Jangan risau, teruskan mencuba!";
+                    btn.className = "w-full py-3.5 px-6 rounded-2xl font-bold text-white bg-rose-600 hover:bg-rose-700 shadow-lg shadow-rose-600/30 transition-transform btn-bounce font-fredoka text-lg";
+                    btn.innerText = "Faham & Teruskan ➔";
+                }
+
+                overlay.classList.remove('hidden');
+            }
+
+            closeFeedbackModal() {
+                sound.playClick();
+                document.getElementById('feedback-modal-overlay').classList.add('hidden');
+            }
+
+            nextQuestion() {
+                sound.playClick();
+                if (this.currentIndex < this.questionsList.length - 1) {
+                    this.currentIndex++;
+                    this.renderQuestion();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    this.finishQuiz();
+                }
+            }
+
+            prevQuestion() {
+                sound.playClick();
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.renderQuestion();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+
+            finishQuiz() {
+                let correctCount = 0;
+                this.questionsList.forEach(q => {
+                    if (this.isChecked[q.id] && this.userAnswers[q.id] === q.correctIndex) {
+                        correctCount++;
+                    }
+                });
+
+                const total = this.questionsList.length;
+                const percentage = Math.round((correctCount / total) * 100);
+
+                // Cumulative global stars
+                this.globalScore += correctCount;
+                this.updateGlobalBadge();
+
+                // Calculate time taken
+                const endTime = new Date();
+                const secondsTaken = Math.floor((endTime - this.startTime) / 1000);
+                const mins = Math.floor(secondsTaken / 60);
+                const secs = secondsTaken % 60;
+                const formattedTime = `${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+
+                // Update Result View UI
+                document.getElementById('result-subject-title').innerText = this.currentSubject.name;
+                document.getElementById('result-score-percent').innerText = `${percentage}%`;
+                document.getElementById('result-correct-count').innerText = `${correctCount} / ${total}`;
+                document.getElementById('result-time-taken').innerText = formattedTime;
+
+                // Feedback Badge & Message
+                const gradeBadge = document.getElementById('result-grade-badge');
+                const feedbackMsg = document.getElementById('result-feedback-msg');
+
+                if (percentage >= 80) {
+                    gradeBadge.className = "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-emerald-100 text-emerald-800";
+                    gradeBadge.innerText = "Tahap Cemerlang (A)";
+                    feedbackMsg.innerText = "Syabas dan tahniah! Anda menunjukkan penguasaan cemerlang dalam modul ini. Kekalkan prestasi!";
+                } else if (percentage >= 60) {
+                    gradeBadge.className = "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-blue-100 text-blue-800";
+                    gradeBadge.innerText = "Tahap Baik (B/C)";
+                    feedbackMsg.innerText = "Tahniah! Keputusan yang baik. Lakukan sedikit ulang kaji pada soalan yang salah untuk skor sempurna 100%.";
+                } else {
+                    gradeBadge.className = "px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-100 text-amber-800";
+                    gradeBadge.innerText = "Perlu Terus Usaha";
+                    feedbackMsg.innerText = "Jangan putus asa! Semak penerangan jawapan di bawah dan cuba lagi ujian rawak untuk mengukuhkan pemahaman.";
+                }
+
+                // Render Review List
+                this.renderReviewList('all');
+
+                // Switch Views
+                document.getElementById('view-quiz').classList.add('hidden');
+                document.getElementById('view-results').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            renderReviewList(filter = 'all') {
+                const container = document.getElementById('review-list-container');
+                
+                document.getElementById('btn-filter-all').className = filter === 'all' 
+                    ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white" 
+                    : "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+                
+                document.getElementById('btn-filter-wrong').className = filter === 'wrong' 
+                    ? "px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white" 
+                    : "px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+
+                const items = this.questionsList.filter((q) => {
+                    const isCorrect = this.isChecked[q.id] && this.userAnswers[q.id] === q.correctIndex;
+                    if (filter === 'wrong') return !isCorrect;
+                    return true;
+                });
+
+                if (items.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-8 text-slate-400 font-medium">
+                            Tiada soalan dalam kategori ini.
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = items.map((q) => {
+                    const userAnsIdx = this.userAnswers[q.id];
+                    const isCorrect = this.isChecked[q.id] && userAnsIdx === q.correctIndex;
+                    const userAnsText = userAnsIdx !== undefined ? q.options[userAnsIdx] : 'Tidak dijawab';
+                    const correctAnsText = q.options[q.correctIndex];
+
+                    return `
+                        <div class="p-5 rounded-2xl border ${isCorrect ? 'border-emerald-200 bg-emerald-50/30' : 'border-rose-200 bg-rose-50/30'} space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-md ${isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                                    ${isCorrect ? '✓ BETUL' : '✗ SALAH / BELUM SEMAK'}
+                                </span>
+                                <span class="text-xs text-slate-400 font-semibold">${q.topic}</span>
+                            </div>
+
+                            <p class="font-bold text-slate-800 text-sm sm:text-base">${q.question}</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                                <div class="p-2.5 rounded-xl ${isCorrect ? 'bg-emerald-100/60 text-emerald-900' : 'bg-rose-100/60 text-rose-900'}">
+                                    <strong>Jawapan Anda:</strong> ${userAnsText}
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-emerald-100/60 text-emerald-900">
+                                    <strong>Jawapan Betul:</strong> ${correctAnsText}
+                                </div>
+                            </div>
+
+                            <div class="text-xs text-slate-600 bg-white p-3 rounded-xl border border-slate-200 leading-relaxed">
+                                💡 <strong>Penerangan:</strong> ${q.explanation}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            filterReview(type) {
+                sound.playClick();
+                this.renderReviewList(type);
+            }
+
+            updateGlobalBadge() {
+                document.getElementById('global-score-badge').innerText = `${this.globalScore} Bintang`;
+            }
+        }
+
+        // Instantiate & initialize app on load
+        let app;
+        window.addEventListener('DOMContentLoaded', () => {
+            app = new AppEngine();
+            app.init();
+        });
+    </script>
+</body>
+</html>
